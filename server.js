@@ -22,7 +22,10 @@ io.on("connection", (socket) => {
   socket.emit("message", formatMessage(botName, "welcome to chatcord!"));
 
   //broadcast when a user connects too all except the client thats connecting
-  socket.broadcast.emit("a user has joined the chat");
+  socket.broadcast.emit(
+    "message",
+    formatMessage(botName, "A user has joined the chat")
+  );
 
   //when client disconnects
   socket.on("disconnect", () => {
@@ -32,8 +35,7 @@ io.on("connection", (socket) => {
   //listen to chat message
 
   socket.on("chatMessage", (msg) => {
-    console.log(msg);
-    io.emit("message", msg);
+    io.emit("message", formatMessage("USER", msg));
   });
 });
 
