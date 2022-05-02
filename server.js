@@ -2,6 +2,7 @@ const express = require("express");
 const socketio = require("socket.io");
 const http = require("http");
 const path = require("path");
+const formatMessage = require("./utils/messages");
 
 const app = express();
 const server = http.createServer(app);
@@ -11,12 +12,14 @@ const io = socketio(server);
 
 app.use(express.static(path.join(__dirname, "public")));
 
+const botName = "ChatCordBot";
+
 //run when a client connects
 io.on("connection", (socket) => {
   //console.log("new web socket connection");
 
   //welcome current user
-  socket.emit("message", "welcome to ChatCord!");
+  socket.emit("message", formatMessage(botName, "welcome to chatcord!"));
 
   //broadcast when a user connects too all except the client thats connecting
   socket.broadcast.emit("a user has joined the chat");

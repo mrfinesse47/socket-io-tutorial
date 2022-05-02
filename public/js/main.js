@@ -1,6 +1,7 @@
 const socket = io();
 
 const chatForm = document.getElementById("chat-form");
+const chatMessages = document.querySelector(".chat-messages");
 
 //to prevent default if you want
 
@@ -12,7 +13,6 @@ const chatForm = document.getElementById("chat-form");
 
 //message from server
 socket.on("message", (msg) => {
-  console.log(msg);
   outputMessage(msg);
 });
 
@@ -26,6 +26,13 @@ chatForm.addEventListener("submit", (e) => {
 
   //emit message to server
   socket.emit("chatMessage", msg);
+
+  //scroll down
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+
+  //clear input
+  e.target.elements.msg.value = "";
+  e.target.elements.msg.focus();
 });
 //output message to dom
 
