@@ -11,8 +11,19 @@ const chatMessages = document.querySelector(".chat-messages");
 //     event.preventDefault();
 //   });
 
+// get  username and room from url
+
+const { username, room } = Qs.parse(location.search, {
+  ignoreQueryPrefix: true,
+});
+
+console.log(username);
+
+//join chatroom
+socket.emit("joinRoom", { username, room });
 //message from server
 socket.on("message", (msg) => {
+  console.log(msg);
   outputMessage(msg);
 });
 
